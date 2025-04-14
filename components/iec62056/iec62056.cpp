@@ -103,7 +103,7 @@ size_t IEC62056Component::receive_frame_() {
       if(DEL != in_buf_[data_in_size_])
         data_in_size_++;
       else
-        ESP_LOGVV(TAG,"DEL received and ingored");
+        ESP_LOGVV(TAG,"DEL received and ignored");
     } else {
       memmove(in_buf_, in_buf_ + 1, data_in_size_ - 1);
       p = &in_buf_[data_in_size_ - 1];
@@ -276,6 +276,7 @@ void IEC62056Component::loop() {
 
   if (!is_wait_state_() && now - last_transmission_from_meter_timestamp_ >= connection_timeout_ms_) {
     ESP_LOGE(TAG, "No transmission from meter.");
+    ESP_LOGVV(TAG, "RX: %s", format_hex_pretty(in_buf_, MAX_IN_BUF_SIZE).c_str());
     connection_status_(false);
     retry_or_sleep_();
     return;
