@@ -275,8 +275,9 @@ void IEC62056Component::loop() {
   size_t frame_size;
 
   if (!is_wait_state_() && now - last_transmission_from_meter_timestamp_ >= connection_timeout_ms_) {
-    ESP_LOGE(TAG, "No transmission from meter.");
-    ESP_LOGVV(TAG, "RX: %s", format_hex_pretty(in_buf_, MAX_IN_BUF_SIZE).c_str());
+    ESP_LOGE(TAG, "No Complete transmission from meter.");
+    ESP_LOGVV(TAG, "RX: %s", format_hex_pretty(in_buf_, data_in_size_).c_str());
+    
     connection_status_(false);
     retry_or_sleep_();
     return;
