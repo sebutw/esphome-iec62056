@@ -12,6 +12,7 @@ namespace iec62056 {
 static const uint8_t ETX = 0x03;
 static const uint8_t STX = 0x02;
 static const uint8_t ACK = 0x06;
+static const uint8_t DEL = 0x7F;
 
 static const char *const TAG = "iec62056.component";
 const uint32_t BAUDRATES[] = {300, 600, 1200, 2400, 4800, 9600, 19200};
@@ -98,7 +99,11 @@ size_t IEC62056Component::receive_frame_() {
       if (!iuart_->read_one_byte(p)) {
         return 0;
       }
-      data_in_size_++;
+      //Ignore DEL
+      if(DEL != in_buf_[data_in_size_])
+        data_in_size_++;
+      else
+        ESP_LOGVV(TAG,"DEL received and ingored");
     } else {
       memmove(in_buf_, in_buf_ + 1, data_in_size_ - 1);
       p = &in_buf_[data_in_size_ - 1];
