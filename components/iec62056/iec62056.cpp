@@ -86,6 +86,8 @@ size_t IEC62056Component::receive_frame_() {
   if (count <= 0)
     return 0;
 
+  ESP_LOGVV(TAG,"received %d Bytes", count);
+
   uint32_t while_start = millis();
   uint8_t *p;
   while (count > 0) {
@@ -317,7 +319,7 @@ void IEC62056Component::loop() {
     case MODE_D_READOUT:
       report_state_();
 
-      if ((frame_size = receive_frame_())) {
+      if ((frame_size = ())) {
         if (in_buf_[0] == '!') {
           connection_status_(false);
 
