@@ -101,8 +101,11 @@ size_t IEC62056Component::receive_frame_() {
       }
       //Ignore DEL
       if(DEL != in_buf_[data_in_size_])
+      {
         ESP_LOGVV(TAG, "Received char: '%c'", in_buf_[data_in_size_]);
         data_in_size_++;
+      }
+
       else
         ESP_LOGVV(TAG,"DEL received and ignored");
     } else {
