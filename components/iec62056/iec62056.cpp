@@ -86,8 +86,6 @@ size_t IEC62056Component::receive_frame_() {
   if (count <= 0)
     return 0;
 
-  ESP_LOGVV(TAG,"received %d Bytes", count);
-
   uint32_t while_start = millis();
   uint8_t *p;
   while (count > 0) {
