@@ -319,7 +319,7 @@ void IEC62056Component::loop() {
     case MODE_D_READOUT:
       report_state_();
 
-      if ((frame_size = ())) {
+      if ((frame_size = receive_frame_())) {
         if (in_buf_[0] == '!') {
           connection_status_(false);
 
